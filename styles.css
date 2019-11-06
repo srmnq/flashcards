@@ -1,0 +1,16 @@
+.card {
+  width: 500px;
+  padding: 10px;
+  margin: 40px;
+  border: 4px solid purple;
+  border-radius: 4px;
+  font-family: tahoma;
+}
+.card > a {
+  text-decoration: none;
+  color: black;
+}
+
+.hidden {
+  display: none;
+}
