@@ -2,55 +2,35 @@ console.log('it works')
 
 fetch('http://localhost:3333/cards')
   .then(res => res.json())
-  .then(addLink)
+  .then(cards => cards.forEach(createCard))
   .catch(err => console.log(err))
 
-function addLink(cards) {
-  cards.forEach(card => {
-    const wrapper = document.createElement('div')
-    const box = document.createElement('section')
-    const link = document.createElement('a')
-    link.href = '#'
-    link.textContent = 'show'
-    link.style.display = 'block'
-    box.classList.add('card')
+function createCard({ title, question, answer }) {
+  const wrapper = document.createElement('div')
+  const box = document.createElement('section')
+  const link = document.createElement('a')
 
-    wrapper.appendChild(box)
-    box.appendChild(link)
-    document.body.appendChild(wrapper)
-    const container = document.createElement('div')
-    container.classList.add('hidden')
-    container.classList.add('card')
-    const title = document.createElement('h1')
-    const question = document.createElement('h2')
-    const answer = document.createElement('p')
+  link.textContent = 'show'
+  link.style.display = 'block'
+  box.classList.add('card')
 
-    title.textContent = card.title
-    question.textContent = card.question
-    answer.textContent = card.answer
+  wrapper.appendChild(box)
+  box.appendChild(link)
+  document.body.appendChild(wrapper)
+  const container = document.createElement('div')
+  container.classList.add('hidden')
+  container.classList.add('card')
 
-    container.appendChild(title)
-    container.appendChild(question)
-    container.appendChild(answer)
-    wrapper.appendChild(container)
+  container.innerHTML = `<h1>${title}</h1> <h2>${question}</h2> <p>${answer}</p>`
 
-    link.addEventListener('click', () => {
-      container.classList.toggle('hidden')
-      link.textContent === 'show'
-        ? (link.textContent = 'hide')
-        : (link.textContent = 'show')
-    })
-  })
+  wrapper.appendChild(container)
+
+  link.addEventListener('click', () => toggleHiddenClass(container, link))
 }
 
-// fetch('http://localhost:3333/cards')
-//   .then(res => res.json())
-//   .then(cards => cards.forEach(createLink))
-//   .catch(err => console.log('--->', err))
-// function createLink(card) {
-//   const el = document.createElement('a')
-//   el.textContent = card.title
-//   el.href = 'http://localhost:3333/cards/' + card.id
-//   el.style.display = 'block'
-//   document.body.append(el)
-// }
+function toggleHiddenClass(container, link) {
+  container.classList.toggle('hidden')
+  link.textContent === 'show'
+    ? (link.textContent = 'hide')
+    : (link.textContent = 'show')
+}
