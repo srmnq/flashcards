@@ -1,36 +1,34 @@
-console.log('it works')
-
 fetch('http://localhost:3333/cards')
   .then(res => res.json())
-  .then(cards => cards.forEach(createCard))
-  .catch(err => console.log(err))
+  .then(cards => cards.forEach(createCardElement))
+  .catch(err => console.log('--->', err))
 
-function createCard({ title, question, answer }) {
-  const wrapper = document.createElement('div')
-  const box = document.createElement('section')
-  const link = document.createElement('a')
+function createCardElement(card) {
+  const el = document.createElement('section')
+  el.classList.add('card')
+  createHTML(el, card)
 
-  link.textContent = 'show'
-  link.style.display = 'block'
-  box.classList.add('card')
+  document.body.appendChild(el)
 
-  wrapper.appendChild(box)
-  box.appendChild(link)
-  document.body.appendChild(wrapper)
-  const container = document.createElement('div')
-  container.classList.add('hidden')
-  container.classList.add('card')
-
-  container.innerHTML = `<h1>${title}</h1> <h2>${question}</h2> <p>${answer}</p>`
-
-  wrapper.appendChild(container)
-
-  link.addEventListener('click', () => toggleHiddenClass(container, link))
+  addToggleLogic(el)
 }
 
-function toggleHiddenClass(container, link) {
-  container.classList.toggle('hidden')
-  link.textContent === 'show'
-    ? (link.textContent = 'hide')
-    : (link.textContent = 'show')
+function addToggleLogic(el) {
+  const toggleButton = el.querySelector('.show-button')
+  const content = el.querySelector('.content')
+  toggleButton.addEventListener('click', () => {
+    content.toggleAttribute('hidden')
+    toggleButton.textContent === 'Show'
+      ? (toggleButton.textContent = 'Hide')
+      : (toggleButton.textContent = 'Show')
+  })
+}
+
+function createHTML(el, card) {
+  el.innerHTML = `<h2>${card.title}</h2> 
+    <div class='content' hidden >
+        <p>${card.question}</p>
+        <p class='answer'>${card.answer}</p>
+    </div>
+  <button class='show-button'>Show</button>`
 }
