@@ -1,26 +1,39 @@
 import Card from './Card'
 import Form from './Form'
+import { getCards, postCard, deleteCard } from './services'
 
 export default class App {
   constructor() {
-    fetch('http://localhost:3333/cards')
-      .then(res => res.json())
-      .then(cards => cards.forEach(card => new Card(card)))
+    this.cardContainer = document.querySelector('.card-container')
+    getCards()
+      .then(cards => {
+        this.cards = cards
+        this.renderCards()
+      })
       .catch(err => console.log('--->', err))
 
-    new Form({ onSubmit: newCard => this.handleSubmitLogic(newCard) })
+    new Form({ onSubmit: card => this.handleSubmit(card) })
   }
-  handleSubmitLogic(newCard) {
-    postCard({ newCard }).then(new Card(newCard))
-  }
-}
 
-function postCard(card) {
-  return fetch('http://localhost:3333/cards', {
-    method: 'POST',
-    body: JSON.stringify(card),
-    headers: {
-      'content-type': 'application/json'
-    }
-  }).then(res => res.json())
+  handleSubmit(card) {
+    postCard(card).then(createdCard => {
+      this.cards = [...this.cards, createdCard]
+      this.renderCards()
+    })
+  }
+
+  handleDelete(card) {
+    deleteCard(card.id).then(deletedCard => {
+      this.cards = this.cards.filter(card => card.id !== deletedCard.id)
+      this.renderCards()
+    })
+  }
+
+  renderCards() {
+    this.cardContainer.innerHTML = ''
+    this.cards.forEach(
+      card =>
+        new Card(card, this.cardContainer, card => this.handleDelete(card))
+    )
+  }
 }
