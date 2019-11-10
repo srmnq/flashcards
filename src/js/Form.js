@@ -19,4 +19,9 @@ export default class Form {
       onSubmit(newCard)
     })
   }
+  editCard(card) {
+    this.el.title.value = card.title
+    this.el.question.value = card.question
+    this.el.answer.value = card.answer
+  }
 }

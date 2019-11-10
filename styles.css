@@ -17,17 +17,20 @@ body {
   padding: 20px;
 }
 .show-button,
-.delete {
+.delete,
+.edit {
   border: none;
   padding: 8px;
   border-radius: 4px;
 }
 .show-button:hover,
-.delete:hover {
+.delete:hover,
+.edit:hover {
   transform: scale(1.09);
 }
 .show-button:active,
-.delete:active {
+.delete:active,
+.edit:active {
   transform: scale(0.9);
 }
 

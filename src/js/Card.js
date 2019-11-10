@@ -1,5 +1,6 @@
 export default class Card {
-  constructor(card, target, onDelete) {
+  constructor({ card, target, onDelete, onEdit }) {
+    this.onEdit = onEdit
     this.onDelete = onDelete
     this.target = target
     this.createCardElement(card)
@@ -13,6 +14,7 @@ export default class Card {
     this.addToggleLogic(el)
 
     this.deleteCard(el, card)
+    this.editCard(el, card)
   }
 
   addToggleLogic(el) {
@@ -29,6 +31,7 @@ export default class Card {
 
   createHTML(el, card) {
     el.innerHTML = `<h2>${card.title}</h2> <button class="delete" type="button">X</button>
+    <button class="edit" type="button">edit</button>
       <div class='content' hidden >
       
           <p>${card.question}</p>
@@ -42,6 +45,15 @@ export default class Card {
     deleteButton.addEventListener('click', () => {
       el.remove()
       this.onDelete(card)
+    })
+  }
+
+  editCard(el, card) {
+    const editButton = el.querySelector('.edit')
+
+    editButton.addEventListener('click', () => {
+      el.remove()
+      this.onEdit(card)
     })
   }
 }

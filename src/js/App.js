@@ -12,7 +12,7 @@ export default class App {
       })
       .catch(err => console.log('--->', err))
 
-    new Form({ onSubmit: card => this.handleSubmit(card) })
+    this.form = new Form({ onSubmit: card => this.handleSubmit(card) })
   }
 
   handleSubmit(card) {
@@ -26,7 +26,12 @@ export default class App {
     this.cardContainer.innerHTML = ''
     this.cards.forEach(
       card =>
-        new Card(card, this.cardContainer, card => this.handleDelete(card))
+        new Card({
+          card,
+          target: this.cardContainer,
+          onDelete: card => this.handleDelete(card),
+          onEdit: card => this.handleEdit(card)
+        })
     )
   }
 
@@ -35,5 +40,9 @@ export default class App {
       this.cards = this.cards.filter(card => card.id !== deletedCard.id)
       this.renderCards()
     })
+  }
+
+  handleEdit(card) {
+    this.form.editCard(card)
   }
 }
