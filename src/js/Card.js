@@ -40,6 +40,7 @@ export default class Card {
   deleteCard(el, card) {
     const deleteButton = el.querySelector('.delete')
     deleteButton.addEventListener('click', () => {
+      el.remove()
       this.onDelete(card)
     })
   }

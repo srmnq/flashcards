@@ -8,19 +8,39 @@ body {
 }
 
 .card {
+  position: relative;
   width: 500px;
-  border: 4px solid #ddd;
-  box-shadow: 0px 0px 0px 8px rgb(89, 99, 93);
+  border-radius: 4px;
   background: rgb(89, 99, 93);
 
   margin: 25px auto;
   padding: 20px;
 }
-.show-button {
+.show-button,
+.delete {
   border: none;
   padding: 8px;
   border-radius: 4px;
 }
+.show-button:hover,
+.delete:hover {
+  transform: scale(1.09);
+}
+.show-button:active,
+.delete:active {
+  transform: scale(0.9);
+}
+
+.delete {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgb(230, 43, 43);
+  color: #eee;
+  font-weight: bolder;
+  font-size: 0.8rem;
+}
+
 .answer {
   font-family: monospace;
   font-size: 1.1rem;
@@ -32,7 +52,7 @@ body {
   padding: 30px;
   width: 500px;
   gap: 10px;
-  border: 4px solid #ddd;
+  border-radius: 4px;
   background: rgb(89, 99, 93);
 }
 

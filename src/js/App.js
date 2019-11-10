@@ -22,18 +22,18 @@ export default class App {
     })
   }
 
-  handleDelete(card) {
-    deleteCard(card.id).then(deletedCard => {
-      this.cards = this.cards.filter(card => card.id !== deletedCard.id)
-      this.renderCards()
-    })
-  }
-
   renderCards() {
     this.cardContainer.innerHTML = ''
     this.cards.forEach(
       card =>
         new Card(card, this.cardContainer, card => this.handleDelete(card))
     )
+  }
+
+  handleDelete(card) {
+    deleteCard(card.id).then(deletedCard => {
+      this.cards = this.cards.filter(card => card.id !== deletedCard.id)
+      this.renderCards()
+    })
   }
 }
