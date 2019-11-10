@@ -52,7 +52,6 @@ export default class Card {
     const editButton = el.querySelector('.edit')
 
     editButton.addEventListener('click', () => {
-      el.remove()
       this.onEdit(card)
     })
   }

@@ -43,6 +43,7 @@ export default class App {
   }
 
   handleEdit(card) {
+    this.handleDelete(card)
     this.form.editCard(card)
   }
 }
